@@ -2,23 +2,26 @@ import React from "react";
 import Reflux from "reflux";
 import { hashHistory } from "react-router";
 
-import {Tabs, Tab} from 'material-ui/Tabs';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-
-import {RegionStore} from "../stores/region.js";
-import {RegionActions} from "../actions/region.js";
+import { Header } from "../components/header.jsx";
+import { RegionStore } from "../stores/region.js";
+import { RegionActions } from "../actions/region.js";
 
 
 
 export const RegionContainer = React.createClass({
 	mixins: [ Reflux.connect(RegionStore,"data") ],
 	getInitialState: function(){
+		var select = 'province';
+		if(this.props.location.state.select != null){
+			select = this.props.location.state.select;
+		}
 		return {
-			selectedTab: 'province'
+			selectedTab: select
 		};
 	},
 	childContextTypes: {
@@ -77,13 +80,15 @@ export const RegionContainer = React.createClass({
 			      style={{marginTop: '98px', marginLeft: 'calc(50% - 20px)'}}
 			    />);
 		}
+
+		var header = (<Header selectedTab={this.state.selectedTab} 
+						 tabs={ [{label: "Province", onActive: this.handleTabActive, value: 'province'}, 
+						 	     {label: "City", onActive: this.handleTabActive, value: 'city'},
+						 	     {label: "About", onActive: this.handleTabAbout, value: 'about'}] } />);
+
 		return (
 			<div>
-			  <Tabs value={this.state.selectedTab}>
-			    <Tab label="Province" onActive={this.handleTabActive} value={'province'}></Tab>
-			    <Tab label="City" onActive={this.handleTabActive} value={'city'}></Tab>
-			    <Tab label="About" onActive={this.handleTabAbout} value={'about'}></Tab>
-			  </Tabs>	
+			  {header}	
 			  {table}
 			</div>);
 	}
