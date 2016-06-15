@@ -17,7 +17,8 @@ export const RegionContainer = React.createClass({
 	mixins: [ Reflux.connect(RegionStore,"data") ],
 	getInitialState: function(){
 		var select = 'province';
-		if(this.props.location.state.select != null){
+		var location = this.props.location;
+		if(location.state && location.state.select != null){
 			select = this.props.location.state.select;
 		}
 		return {

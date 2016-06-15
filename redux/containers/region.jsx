@@ -19,7 +19,8 @@ class RegionContainer extends React.Component{
 		super(props);
 
 		var select = 'province';
-		if(this.props.location.state.select != null){
+		var location = this.props.location;
+		if(location.state && location.state.select != null){
 			select = this.props.location.state.select;
 		}
 		this.state = {
