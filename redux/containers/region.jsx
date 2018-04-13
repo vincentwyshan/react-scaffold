@@ -45,7 +45,7 @@ class RegionContainer extends React.Component{
     	this.setState({
     		selectedTab: tab.props.value
     	});
-    	this.props.actions.fetchRegion('/regiondata/' + this.state.selectedTab, {});
+    	this.props.actions.fetchRegion('/regiondata/' + tab.props.value, {});
     }
     handleTabAbout(tab){
     	this.setState({
